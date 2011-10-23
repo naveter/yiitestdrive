@@ -37,6 +37,8 @@ class LoginForm extends CFormModel
 	{
 		return array(
 			'rememberMe'=>'Remember me next time',
+                        'username' => 'Имя пользователя',
+                        'password' => 'Пароль',
 		);
 	}
 
