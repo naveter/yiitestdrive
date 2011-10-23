@@ -50,3 +50,11 @@ Stack trace:
 #20 /home/srv/dp2.ru/html/framework/base/CApplication.php(158): CWebApplication->processRequest()
 #21 /home/srv/dp2.ru/html/demos/blog/index.php(11): CApplication->run()
 #22 {main} REQUEST_URI=/demos/blog/index.php/post/index
+2011/10/23 14:26:41 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "inde".' in /home/srv/dp2.ru/html/framework/web/CController.php:477
+Stack trace:
+#0 /home/srv/dp2.ru/html/framework/web/CController.php(262): CController->missingAction('inde')
+#1 /home/srv/dp2.ru/html/framework/web/CWebApplication.php(277): CController->run('inde')
+#2 /home/srv/dp2.ru/html/framework/web/CWebApplication.php(136): CWebApplication->runController('post/inde')
+#3 /home/srv/dp2.ru/html/framework/base/CApplication.php(158): CWebApplication->processRequest()
+#4 /home/srv/dp2.ru/html/demos/blog/index.php(11): CApplication->run()
+#5 {main} REQUEST_URI=/demos/blog/index.php/post/inde
