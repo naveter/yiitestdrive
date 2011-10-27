@@ -165,5 +165,21 @@ class Post extends CActiveRecord
             $this->_oldTags=$this->tags;
         }
         
+        protected function afterDelete()
+        {
+            parent::afterDelete();
+            Comment::model()->deleteAll('post_id='.$this->id);
+            Tag::model()->updateFrequency($this->tags, '');
+        }
+
+	public function addComment($comment)
+	{
+		if(Yii::app()->params['commentNeedApproval'])
+			$comment->status=Comment::STATUS_PENDING;
+		else
+			$comment->status=Comment::STATUS_APPROVED;
+		$comment->post_id=$this->id;
+		return $comment->save();
+	}
         
 }
