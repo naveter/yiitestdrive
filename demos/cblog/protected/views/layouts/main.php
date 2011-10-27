@@ -47,7 +47,8 @@
 	<div id="footer">
 		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
 		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
+		<?php $stats = Yii::app()->db->getStats();
+                      echo "Query count:". $stats[0]; ?>
 	</div><!-- footer -->
 
 </div><!-- page -->

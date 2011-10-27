@@ -8,7 +8,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Make blog yourself',
-
+        
 	// preloading 'log' component
 	'preload'=>array('log'),
 
@@ -50,17 +50,20 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
+			'connectionString' => 'mysql:host=localhost;dbname=cblog',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '123456',
 			'charset' => 'utf8',
+                        'tablePrefix'=>'tbl_',
+                        'enableProfiling' => true,
+                        
 		),
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
-            'errorAction'=>'site/error',
-        ),
+                    'errorAction'=>'site/error',
+                ),
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -68,14 +71,14 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
-				// uncomment the following to show log messages on web pages
-				
+				array('class' => 'CProfileLogRoute', 'enabled' => true),
 				array(
 					'class'=>'CWebLogRoute',
 				),
 				
 			),
 		),
+                
 	),
 
 	// application-level parameters that can be accessed
