@@ -3,6 +3,8 @@
 class PostController extends Controller
 {
 	public $layout='column2';
+        public $baseScriptUrl;
+        public $cssFile;
 
 	/**
 	 * @var CActiveRecord the currently loaded data model instance.
@@ -15,9 +17,20 @@ class PostController extends Controller
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
+                    'accessControl', // perform access control for CRUD operations
+                    'TestFil + test', // for page test
 		);
 	}
+
+        /**
+         * Filter for actionTest controller
+         */
+        public function filterTestFil($filterChain)
+        {
+            print "This is text from filterTestFil on action <b>". $filterChain->action->id ."</b><br>";
+
+            $filterChain->run();
+        }
 
 	/**
 	 * Specifies the access control rules.
@@ -110,6 +123,38 @@ class PostController extends Controller
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
+
+        /**
+         * Testing action
+         */
+        public function actionTest() {
+
+
+            
+
+            $this->render('test', array(
+                'var1' => 'Это значение из переменной var1',
+            ));
+        }
+
+        /**
+         * Test page for including scripts and js-files
+         */
+        public function actionTestScript() {
+            $cs=Yii::app()->getClientScript();
+            $cs->registerCoreScript('jquery');
+
+            $this->baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.assets.post'));
+            $cs->registerScriptFile($this->baseScriptUrl.'/testscript.js');
+
+            $this->cssFile=$this->baseScriptUrl.'/testscript.css';
+            $cs->registerCssFile($this->cssFile);
+
+            $vars = array();
+            $vars['first'] = "Value from index 'first'";
+            
+            $this->render('testscript', $vars);
+        }
 
 	/**
 	 * Lists all models.

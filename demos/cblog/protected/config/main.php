@@ -12,6 +12,8 @@ return array(
 	// preloading 'log' component
 	'preload'=>array('log'),
 
+        'defaultController'=>'post',
+
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
@@ -32,6 +34,7 @@ return array(
 
 	// application components
 	'components'=>array(
+
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
@@ -48,7 +51,9 @@ return array(
 		),
 		*/
 		// uncomment the following to use a MySQL database
-		
+//                'cache'=>array(
+//                    'class'=>'CDbCache',
+//                ),
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=cblog',
 			'emulatePrepare' => true,
@@ -57,7 +62,8 @@ return array(
 			'charset' => 'utf8',
                         'tablePrefix'=>'tbl_',
                         'enableProfiling' => true,
-                        
+//                        'schemaCachingDuration'=>3600,
+//                        'class'=>'system.db.CDbConnection',
 		),
 		
 		'errorHandler'=>array(

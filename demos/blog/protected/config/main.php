@@ -34,6 +34,10 @@ return array(
 
 	// application components
 	'components'=>array(
+           // отключение кеширования скриптов и стилей
+           'assetManager' => array(
+             'linkAssets' => true,
+           ),
 
             'user'=>array(
                     // enable cookie-based authentication
