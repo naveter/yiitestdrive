@@ -5,7 +5,7 @@
 </div>
 
 <div id="second-div">
-    baseScriptUrl: <?php echo $this->baseScriptUrl; ?><br>
+    baseScriptUrl: <?php echo $baseScriptUrl; ?><br>
     <?php echo $first; ?>
 </div>
 

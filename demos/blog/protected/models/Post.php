@@ -92,7 +92,6 @@ class Post extends CActiveRecord
 	{
 		return Yii::app()->createUrl('post/view', array(
 			'id'=>$this->id,
-			'title'=>$this->title,
 		));
 	}
 

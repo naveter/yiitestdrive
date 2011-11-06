@@ -3,13 +3,19 @@
 class PostController extends Controller
 {
 	public $layout='column2';
-        public $baseScriptUrl;
-        public $cssFile;
+        public static $baseScriptUrl;
 
 	/**
 	 * @var CActiveRecord the currently loaded data model instance.
 	 */
 	private $_model;
+
+         public function init() {
+            if ( !self::$baseScriptUrl )
+                self::$baseScriptUrl = Yii::app()->getAssetManager()->publish(
+                            Yii::getPathOfAlias('application.assets.post')
+                        );
+         }
 
 	/**
 	 * @return array action filters
@@ -144,14 +150,12 @@ class PostController extends Controller
             $cs=Yii::app()->getClientScript();
             $cs->registerCoreScript('jquery');
 
-            $this->baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('application.assets.post'));
-            $cs->registerScriptFile($this->baseScriptUrl.'/testscript.js');
-
-            $this->cssFile=$this->baseScriptUrl.'/testscript.css';
-            $cs->registerCssFile($this->cssFile);
+            $cs->registerScriptFile(self::$baseScriptUrl.'/testscript.js');
+            $cs->registerCssFile(self::$baseScriptUrl.'/testscript.css');
 
             $vars = array();
             $vars['first'] = "Value from index 'first'";
+            $vars['baseScriptUrl'] = self::$baseScriptUrl;
             
             $this->render('testscript', $vars);
         }
@@ -221,8 +225,8 @@ class PostController extends Controller
 				if(Yii::app()->user->isGuest)
 					$condition='status='.Post::STATUS_PUBLISHED.' OR status='.Post::STATUS_ARCHIVED;
 				else
-					$condition='';
-				$this->_model=Post::model()->findByPk($_GET['id'], $condition);
+					$condition=''; //with('author')
+				$this->_model=Post::model()->with('comments')->with('author')->findByPk($_GET['id'], $condition);
 			}
 			if($this->_model===null)
 				throw new CHttpException(404,'The requested page does not exist.');
