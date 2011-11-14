@@ -6,18 +6,23 @@
 		</div><!-- content -->
 	</div>
 	<div class="span-5 last">
-		<div id="sidebar">
-		<?php
-			$this->beginWidget('zii.widgets.CPortlet', array(
-				'title'=>'Operations',
-			));
-			$this->widget('zii.widgets.CMenu', array(
-				'items'=>$this->menu,
-				'htmlOptions'=>array('class'=>'operations'),
-			));
-			$this->endWidget();
-		?>
-		</div><!-- sidebar -->
+            <div id="sidebar">
+                <?php if(!Yii::app()->user->isGuest) $this->widget('UserMenu'); ?>
+            </div>
+            <div id="tag-cloud">
+
+                <?php //if($this->beginCache('tagCloud', array('duration'=>3600))) { ?>
+
+                    <?php if(!Yii::app()->user->isGuest) $this->widget('TagCloud'); ?>
+
+                <?php //$this->endCache(); } ?>
+
+            </div>
+            <?php $this->widget('RecentComments', array(
+                'maxComments'=>Yii::app()->params['recentCommentCount'],
+            )); ?>
+
 	</div>
 </div>
+
 <?php $this->endContent(); ?>

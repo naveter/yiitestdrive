@@ -3,11 +3,19 @@
 class PostController extends Controller
 {
 	public $layout='column2';
+        public static $baseScriptUrl;
 
 	/**
 	 * @var CActiveRecord the currently loaded data model instance.
 	 */
 	private $_model;
+
+         public function init() {
+            if ( !self::$baseScriptUrl )
+                self::$baseScriptUrl = Yii::app()->getAssetManager()->publish(
+                            Yii::getPathOfAlias('application.assets.post')
+                        );
+         }
 
 	/**
 	 * @return array action filters
@@ -15,9 +23,20 @@ class PostController extends Controller
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
+                    'accessControl', // perform access control for CRUD operations
+                    'TestFil + test', // for page test
 		);
 	}
+
+        /**
+         * Filter for actionTest controller
+         */
+        public function filterTestFil($filterChain)
+        {
+            print "This is text from filterTestFil on action <b>". $filterChain->action->id ."</b><br>";
+
+            $filterChain->run();
+        }
 
 	/**
 	 * Specifies the access control rules.
@@ -111,6 +130,36 @@ class PostController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
+        /**
+         * Testing action
+         */
+        public function actionTest() {
+
+
+            
+
+            $this->render('test', array(
+                'var1' => 'Это значение из переменной var1',
+            ));
+        }
+
+        /**
+         * Test page for including scripts and js-files
+         */
+        public function actionTestScript() {
+            $cs=Yii::app()->getClientScript();
+            $cs->registerCoreScript('jquery');
+
+            $cs->registerScriptFile(self::$baseScriptUrl.'/testscript.js');
+            $cs->registerCssFile(self::$baseScriptUrl.'/testscript.css');
+
+            $vars = array();
+            $vars['first'] = "Value from index 'first'";
+            $vars['baseScriptUrl'] = self::$baseScriptUrl;
+            
+            $this->render('testscript', $vars);
+        }
+
 	/**
 	 * Lists all models.
 	 */
@@ -176,8 +225,8 @@ class PostController extends Controller
 				if(Yii::app()->user->isGuest)
 					$condition='status='.Post::STATUS_PUBLISHED.' OR status='.Post::STATUS_ARCHIVED;
 				else
-					$condition='';
-				$this->_model=Post::model()->findByPk($_GET['id'], $condition);
+					$condition=''; //with('author')
+				$this->_model=Post::model()->with('comments')->with('author')->findByPk($_GET['id'], $condition);
 			}
 			if($this->_model===null)
 				throw new CHttpException(404,'The requested page does not exist.');

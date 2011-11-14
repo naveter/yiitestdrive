@@ -86,4 +86,28 @@ class Tag extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+        /** поиск популярных тегов
+        * @param integer max tags count
+        * @return array of tagname => count
+        */
+        public function findTagWeights($max_count = 20) {
+		$models=$this->findAll(array(
+			'order'=>'frequency DESC',
+			'limit'=>$max_count,
+		));
+
+		$total=0;
+		foreach($models as $model)
+			$total+=$model->frequency;
+
+		$tags=array();
+		if($total>0)
+		{
+			foreach($models as $model)
+				$tags[$model->name]=8+(int)(16*$model->frequency/($total+10));
+			ksort($tags);
+		}
+		return $tags;
+        }
 }

@@ -3,4 +3,5 @@
 	<li><?php echo CHtml::link('Manage Posts',array('post/admin')); ?></li>
 	<li><?php echo CHtml::link('Approve Comments',array('comment/index')) . ' (' . Comment::model()->pendingCommentCount . ')'; ?></li>
 	<li><?php echo CHtml::link('Logout',array('site/logout')); ?></li>
+        <li><?php echo CHtml::link('Test page',array('post/test')); ?></li>
 </ul>

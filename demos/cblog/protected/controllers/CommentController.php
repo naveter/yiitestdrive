@@ -125,13 +125,19 @@ class CommentController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Comment');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+        public function actionIndex()
+        {
+            $dataProvider=new CActiveDataProvider('Comment', array(
+                'criteria'=>array(
+                    'with'=>'post',
+                    'order'=>'t.status, t.create_time DESC',
+                ),
+            ));
+
+            $this->render('index',array(
+                'dataProvider'=>$dataProvider,
+            ));
+        }
 
 	/**
 	 * Manages all models.
@@ -173,4 +179,21 @@ class CommentController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+        /**
+         * Set status approved to comment
+         * @param integer id
+         */
+        public function actionApprove($id)
+        {
+            if(Yii::app()->request->isPostRequest)
+            {
+                $comment=$this->loadModel();
+                $comment->approve();
+                $this->redirect(array('comment/admin'));
+            }
+            else
+                throw new CHttpException(400,'Invalid request...');
+        }
+        
 }

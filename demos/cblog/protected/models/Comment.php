@@ -117,4 +117,29 @@ class Comment extends CActiveRecord
             else
                 return false;
         }
+
+        public function approve() {
+            $this->status = self::STATUS_APPROVED;
+            $this->save();
+            return true;
+        }
+
+        // сколько коментариев ожидает одобрения
+        public function pendingCommentCount() {
+            $criteria=new CDbCriteria;
+            $criteria->compare('status',self::STATUS_PENDING);
+//            return self::model()->count("status=:status", array(':status' => self::STATUS_PENDING));
+            return self::model()->count($criteria);
+        }
+
+        public function findRecentComments($limit=10)
+        {
+            return $this->with('post')->findAll(array(
+                'condition'=>'t.status='.self::STATUS_APPROVED,
+                'order'=>'t.create_time DESC',
+                'limit'=>$limit,
+            ));
+        }
+
+    
 }
