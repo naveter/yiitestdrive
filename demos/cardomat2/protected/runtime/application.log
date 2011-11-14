@@ -1,0 +1,6 @@
+2011/11/14 15:31:46 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dp3.catalog_count' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `catalog_count`.
+in /mnt/work/srv/dp2.ru/html/demos/cardomat2/index.php (13)
+2011/11/14 15:32:14 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dp3.catalog_count' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `catalog_count`.
+in /mnt/work/srv/dp2.ru/html/demos/cardomat2/index.php (13)
+2011/11/14 15:33:26 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'dp3.catalog_count' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `catalog_count`.
+in /mnt/work/srv/dp2.ru/html/demos/cardomat2/index.php (13)

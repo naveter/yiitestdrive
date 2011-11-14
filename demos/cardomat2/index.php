@@ -10,9 +10,4 @@ defined('YII_DEBUG') or define('YII_DEBUG',true);
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
 require_once($yii);
-
-//Yii::beginProfile('blockID');
-
 Yii::createWebApplication($config)->run();
-
-//Yii::endProfile('blockID');
